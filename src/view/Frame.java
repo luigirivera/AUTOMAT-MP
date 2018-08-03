@@ -260,7 +260,7 @@ public class Frame extends JFrame {
 					JOptionPane.showMessageDialog(frame, "You must have at least 1 living thing travelling with you", "Empty Ship", JOptionPane.ERROR_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(frame, "You must have at most 2 living things travelling with you", "Full Ship", JOptionPane.ERROR_MESSAGE);
-			clearEntitySelect();
+
 			update();
 		}
 		
@@ -283,7 +283,13 @@ public class Frame extends JFrame {
 		
 		for(int i = 0; i < entities.size() ; i++)
 			if(entities.get(i).isSelected())
-				selected.add(i);
+				if(modelEntities.get(i).getPlanet().equals(model.getUser().getPlanet()))
+					selected.add(i);
+				else
+				{
+					JOptionPane.showMessageDialog(frame, "That living thing is not in the planet you are in.", "Missing Living Thing", JOptionPane.ERROR_MESSAGE);
+					return null;
+				}
 		
 		return selected;
 	}
@@ -296,21 +302,24 @@ public class Frame extends JFrame {
 	
 	private void moveEntities(ArrayList<Integer> selected)
 	{
-		if(model.getUser().getPlanet().equals(PLANET.EARTH))
+		if(selected != null)
 		{
-			for(Integer i : selected)
-				modelEntities.get(i).setPlanet(PLANET.MARS);
+			if(model.getUser().getPlanet().equals(PLANET.EARTH))
+			{
+				for(Integer i : selected)
+					modelEntities.get(i).setPlanet(PLANET.MARS);
+				
+				model.getUser().setPlanet(PLANET.MARS);
+			}
+				
 			
-			model.getUser().setPlanet(PLANET.MARS);
-		}
-			
-		
-		else
-		{
-			for(Integer i : selected)
-				modelEntities.get(i).setPlanet(PLANET.EARTH);
-			
-			model.getUser().setPlanet(PLANET.EARTH);
+			else
+			{
+				for(Integer i : selected)
+					modelEntities.get(i).setPlanet(PLANET.EARTH);
+				
+				model.getUser().setPlanet(PLANET.EARTH);
+			}
 		}
 	}
 	
@@ -329,6 +338,8 @@ public class Frame extends JFrame {
 			location.setText(earthLoc);
 		else
 			location.setText(marsLoc);
-			
+		
+		clearEntitySelect();
+
 	}
 }
