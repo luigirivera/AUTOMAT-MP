@@ -23,7 +23,7 @@ public class Frame extends JFrame {
 	private JButton about, instructions, walkthrough, quit, transport;
 	private JCheckBox human1, human2, cow, lion, grain;
 	private Planet earth, mars;
-	private JLabel location, human1txt, human2txt, cowtxt, liontxt, graintxt, earthtxt, marstxt;
+	private JLabel location, human1txt, human2txt, cowtxt, liontxt, graintxt, earthtxt, marstxt, stepCount;
 	
 	private final String earthLoc = "You are in Earth";
 	private final String marsLoc = "You are in Mars";
@@ -83,6 +83,7 @@ public class Frame extends JFrame {
 		liontxt = new JLabel("Lion");
 		cowtxt = new JLabel("Cow");
 		graintxt = new JLabel("Grain");
+		stepCount = new JLabel("Steps Done: 0");
 		
 		entities = new ArrayList<JCheckBox>();
 		modelEntities = new ArrayList<Entity>();
@@ -98,6 +99,7 @@ public class Frame extends JFrame {
 		add(quit);
 		
 		add(location);
+		add(stepCount);
 		
 		add(human1);
 		add(human2);
@@ -128,6 +130,8 @@ public class Frame extends JFrame {
 		
 		location.setSize(225, 60);
 		location.setLocation(this.getWidth()/2 - location.getWidth()/2, 100);
+		stepCount.setSize(location.getSize());
+		stepCount.setLocation(this.getWidth()/2 - stepCount.getWidth()/2 + 20, 130);
 	
 		human1.setSize(100, 50);
 		human2.setSize(100, 50);
@@ -189,14 +193,17 @@ public class Frame extends JFrame {
 		
 		location.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
 		location.setForeground(Color.WHITE);
+		stepCount.setFont(location.getFont());
+		stepCount.setForeground(Color.WHITE);
+		
 		earthtxt.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 25));
 		marstxt.setFont(earthtxt.getFont());
+		
 		human1txt.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 20));
 		human2txt.setFont(human1txt.getFont());
 		liontxt.setFont(human2txt.getFont());
 		cowtxt.setFont(liontxt.getFont());
 		graintxt.setFont(cowtxt.getFont());
-
 		
 		for(JCheckBox cb : entities)
 		{
@@ -345,9 +352,10 @@ public class Frame extends JFrame {
 		return marsE;
 	}
 	
-	private void checkStatus()
+	private boolean checkStatus()
 	{
 		ArrayList<Entity> otherPlanetE;
+		boolean pass = true;
 		
 		if(model.getUser().getPlanet().equals(PLANET.EARTH))
 			otherPlanetE = getAllInMars();
@@ -357,30 +365,48 @@ public class Frame extends JFrame {
 		if(otherPlanetE.contains(model.getHuman1()) || otherPlanetE.contains(model.getHuman2()))
 		{
 			if(otherPlanetE.contains(model.getLion()))
-				System.out.println("Dead");
+			{
+				System.out.println("H + L");
+				pass = false;
+			}
+				
 			if(otherPlanetE.contains(model.getCow()))
-				System.out.println("Food");
+			{
+				System.out.println("H + C");
+				pass = false;
+			}
+				
 			if(otherPlanetE.contains(model.getLion()) && otherPlanetE.contains(model.getCow()))
-				System.out.println("Dead Squared");
+			{
+				System.out.println("H + L / L + C / H + C");
+				pass = false;
+			}
 		}
+
 		
 		else if(otherPlanetE.contains(model.getLion()) && otherPlanetE.contains(model.getCow()))
-			System.out.println("Dead");
+		{
+			System.out.println("L + G");
+			pass = false;
+		}
+			
 		
 		if(otherPlanetE.contains(model.getCow()) && otherPlanetE.contains(model.getGrain()))
-			System.out.println("Food");
+		{
+			System.out.println("C + G");
+			pass = false;
+		}
+		
+		return pass;
 	}
 	
 	private void update()
 	{
 		for(int i = 0 ; i < modelEntities.size() ; i++)
-		{
-			int Y = textEntities.get(i).getY();
 			if(modelEntities.get(i).getPlanet().equals(PLANET.EARTH))
-				textEntities.get(i).setLocation(inEarthX, Y);
+				textEntities.get(i).setLocation(inEarthX, textEntities.get(i).getY());
 			else
-				textEntities.get(i).setLocation(inMarsX, Y);
-		}
+				textEntities.get(i).setLocation(inMarsX, textEntities.get(i).getY());
 		
 		if(model.getUser().getPlanet().equals(PLANET.EARTH))
 			location.setText(earthLoc);
@@ -388,6 +414,7 @@ public class Frame extends JFrame {
 			location.setText(marsLoc);
 		
 		clearEntitySelect();
-		checkStatus();
+		if(checkStatus())
+			stepCount.setText("Steps Done: " + String.valueOf(Integer.parseInt(stepCount.getText().substring(stepCount.getText().indexOf(":") + 2)) + 1));
 	}
 }
