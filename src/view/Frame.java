@@ -323,6 +323,54 @@ public class Frame extends JFrame {
 		}
 	}
 	
+	private ArrayList<Entity> getAllInEarth()
+	{
+		ArrayList<Entity> earthE = new ArrayList<Entity>();
+		
+		for(Entity e : modelEntities)
+			if(e.getPlanet().equals(PLANET.EARTH))
+				earthE.add(e);
+		
+		return earthE;
+	}
+	
+	private ArrayList<Entity> getAllInMars()
+	{
+		ArrayList<Entity> marsE = new ArrayList<Entity>();
+		
+		for(Entity e : modelEntities)
+			if(e.getPlanet().equals(PLANET.MARS))
+				marsE.add(e);
+		
+		return marsE;
+	}
+	
+	private void checkStatus()
+	{
+		ArrayList<Entity> otherPlanetE;
+		
+		if(model.getUser().getPlanet().equals(PLANET.EARTH))
+			otherPlanetE = getAllInMars();
+		else
+			otherPlanetE = getAllInEarth();
+		
+		if(otherPlanetE.contains(model.getHuman1()) || otherPlanetE.contains(model.getHuman2()))
+		{
+			if(otherPlanetE.contains(model.getLion()))
+				System.out.println("Dead");
+			if(otherPlanetE.contains(model.getCow()))
+				System.out.println("Food");
+			if(otherPlanetE.contains(model.getLion()) && otherPlanetE.contains(model.getCow()))
+				System.out.println("Dead Squared");
+		}
+		
+		else if(otherPlanetE.contains(model.getLion()) && otherPlanetE.contains(model.getCow()))
+			System.out.println("Dead");
+		
+		if(otherPlanetE.contains(model.getCow()) && otherPlanetE.contains(model.getGrain()))
+			System.out.println("Food");
+	}
+	
 	private void update()
 	{
 		for(int i = 0 ; i < modelEntities.size() ; i++)
@@ -340,6 +388,6 @@ public class Frame extends JFrame {
 			location.setText(marsLoc);
 		
 		clearEntitySelect();
-
+		checkStatus();
 	}
 }
