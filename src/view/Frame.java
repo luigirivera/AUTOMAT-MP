@@ -37,6 +37,7 @@ public class Frame extends JFrame {
 	
 	private Model model;
 	private Frame frame;
+	private int stepCountInt;
 	
 	public Frame(Model model)
 	{
@@ -60,6 +61,8 @@ public class Frame extends JFrame {
 	
 	private void instantiate()
 	{
+		stepCountInt  = 0;
+		
 		about = new JButton("About");
 		instructions = new JButton("Instructions");
 		walkthrough = new JButton("Walkthrough");
@@ -83,7 +86,7 @@ public class Frame extends JFrame {
 		liontxt = new JLabel("Lion");
 		cowtxt = new JLabel("Cow");
 		graintxt = new JLabel("Grain");
-		stepCount = new JLabel("Steps Done: 0");
+		stepCount = new JLabel("Steps Done: " + stepCountInt);
 		
 		entities = new ArrayList<JCheckBox>();
 		modelEntities = new ArrayList<Entity>();
@@ -356,6 +359,7 @@ public class Frame extends JFrame {
 	{
 		ArrayList<Entity> otherPlanetE;
 		boolean pass = true;
+		String error = "<html>Mission Failed: ";
 		
 		if(model.getUser().getPlanet().equals(PLANET.EARTH))
 			otherPlanetE = getAllInMars();
@@ -366,19 +370,19 @@ public class Frame extends JFrame {
 		{
 			if(otherPlanetE.contains(model.getLion()))
 			{
-				System.out.println("H + L");
+				error = error.concat("<br>One of the humans killed the lion");
 				pass = false;
 			}
 				
 			if(otherPlanetE.contains(model.getCow()))
 			{
-				System.out.println("H + C");
+				error = error.concat("<br>One of the humans ate the cow");
 				pass = false;
 			}
 				
 			if(otherPlanetE.contains(model.getLion()) && otherPlanetE.contains(model.getCow()))
 			{
-				System.out.println("H + L / L + C / H + C");
+				error = error.concat("<br>The lion ate the cow");
 				pass = false;
 			}
 		}
@@ -386,17 +390,23 @@ public class Frame extends JFrame {
 		
 		else if(otherPlanetE.contains(model.getLion()) && otherPlanetE.contains(model.getCow()))
 		{
-			System.out.println("L + G");
+			error = error.concat("<br>The lion ate the cow");
 			pass = false;
 		}
 			
 		
 		if(otherPlanetE.contains(model.getCow()) && otherPlanetE.contains(model.getGrain()))
 		{
-			System.out.println("C + G");
+			error = error.concat("<br>The cow ate the grain");
 			pass = false;
 		}
 		
+		error = error.concat("<html>");
+		if(!error.equals("<html>Mission Failed: <html>"))
+		{
+			JOptionPane.showMessageDialog(frame, error, "Mission Failed", JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		}
 		return pass;
 	}
 	
@@ -415,6 +425,18 @@ public class Frame extends JFrame {
 		
 		clearEntitySelect();
 		if(checkStatus())
-			stepCount.setText("Steps Done: " + String.valueOf(Integer.parseInt(stepCount.getText().substring(stepCount.getText().indexOf(":") + 2)) + 1));
+		{
+			stepCountInt++;
+			stepCount.setText("Steps Done: " + stepCountInt);
+		}
+		
+		if(getAllInMars().size() == 5)
+		{
+			if(stepCountInt == 7)
+				JOptionPane.showMessageDialog(frame, "You have succesfully tranferred all living things", "Mission Success", JOptionPane.INFORMATION_MESSAGE);
+			else
+				JOptionPane.showMessageDialog(frame, "<html>You have succesfully tranferred all living things<br>However, it was performed not on the minimum number of steps</html>", "Mission Somewhat Success", JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
+		}
 	}
 }
