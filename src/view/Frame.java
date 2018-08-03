@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import enums.PLANET;
+import model.Entity;
 import model.Model;
 
 public class Frame extends JFrame {
@@ -28,7 +30,10 @@ public class Frame extends JFrame {
 	
 	private final int inEarthX = 175;
 	private final int inMarsX = 535;
+	
 	private ArrayList<JCheckBox> entities;
+	private ArrayList<Entity> modelEntities;
+	private ArrayList<JLabel> textEntities;
 	
 	private Model model;
 	private Frame frame;
@@ -61,8 +66,8 @@ public class Frame extends JFrame {
 		quit = new JButton("Quit");
 		transport = new JButton("Transport");
 		
-		human1 = new JCheckBox("Human");
-		human2 = new JCheckBox("Human");
+		human1 = new JCheckBox("Human 1");
+		human2 = new JCheckBox("Human 2");
 		cow = new JCheckBox("Cow");
 		lion = new JCheckBox("Lion");
 		grain = new JCheckBox("Grain");
@@ -73,13 +78,15 @@ public class Frame extends JFrame {
 		location = new JLabel(earthLoc);
 		earthtxt = new JLabel("Earth");
 		marstxt = new JLabel("Mars");
-		human1txt = new JLabel("Human");
-		human2txt = new JLabel("Human");
+		human1txt = new JLabel("Human 1");
+		human2txt = new JLabel("Human 2");
 		liontxt = new JLabel("Lion");
 		cowtxt = new JLabel("Cow");
 		graintxt = new JLabel("Grain");
 		
 		entities = new ArrayList<JCheckBox>();
+		modelEntities = new ArrayList<Entity>();
+		textEntities = new ArrayList<JLabel>();
 	}
 	
 	private void initialize()
@@ -161,6 +168,18 @@ public class Frame extends JFrame {
 		entities.add(cow);
 		entities.add(lion);
 		entities.add(grain);
+		
+		modelEntities.add(model.getHuman1());
+		modelEntities.add(model.getHuman2());
+		modelEntities.add(model.getCow());
+		modelEntities.add(model.getLion());
+		modelEntities.add(model.getGrain());
+		
+		textEntities.add(human1txt);
+		textEntities.add(human2txt);
+		textEntities.add(cowtxt);
+		textEntities.add(liontxt);
+		textEntities.add(graintxt);
 	}
 	
 	private void configure()
@@ -235,13 +254,14 @@ public class Frame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(checkEntitySelect())
-				System.out.println("True");
+				moveEntities(getEntitySelect());
 			else
 				if(getEntitySelect().size() == 0)
 					JOptionPane.showMessageDialog(frame, "You must have at least 1 living thing travelling with you", "Empty Ship", JOptionPane.ERROR_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(frame, "You must have at most 2 living things travelling with you", "Full Ship", JOptionPane.ERROR_MESSAGE);
 			clearEntitySelect();
+			update();
 		}
 		
 	}
@@ -257,13 +277,13 @@ public class Frame extends JFrame {
 		else return true;
 	}
 	
-	private ArrayList<String> getEntitySelect()
+	private ArrayList<Integer> getEntitySelect()
 	{
-		ArrayList<String> selected = new ArrayList<String>();
+		ArrayList<Integer> selected = new ArrayList<Integer>();
 		
-		for(JCheckBox cB : entities)
-			if(cB.isSelected())
-				selected.add(cB.getText());
+		for(int i = 0; i < entities.size() ; i++)
+			if(entities.get(i).isSelected())
+				selected.add(i);
 		
 		return selected;
 	}
@@ -272,5 +292,43 @@ public class Frame extends JFrame {
 	{
 		for(JCheckBox cB : entities)
 			cB.setSelected(false);
+	}
+	
+	private void moveEntities(ArrayList<Integer> selected)
+	{
+		if(model.getUser().getPlanet().equals(PLANET.EARTH))
+		{
+			for(Integer i : selected)
+				modelEntities.get(i).setPlanet(PLANET.MARS);
+			
+			model.getUser().setPlanet(PLANET.MARS);
+		}
+			
+		
+		else
+		{
+			for(Integer i : selected)
+				modelEntities.get(i).setPlanet(PLANET.EARTH);
+			
+			model.getUser().setPlanet(PLANET.EARTH);
+		}
+	}
+	
+	private void update()
+	{
+		for(int i = 0 ; i < modelEntities.size() ; i++)
+		{
+			int Y = textEntities.get(i).getY();
+			if(modelEntities.get(i).getPlanet().equals(PLANET.EARTH))
+				textEntities.get(i).setLocation(inEarthX, Y);
+			else
+				textEntities.get(i).setLocation(inMarsX, Y);
+		}
+		
+		if(model.getUser().getPlanet().equals(PLANET.EARTH))
+			location.setText(earthLoc);
+		else
+			location.setText(marsLoc);
+			
 	}
 }
