@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import model.Model;
 
@@ -30,12 +31,14 @@ public class Frame extends JFrame {
 	private ArrayList<JCheckBox> entities;
 	
 	private Model model;
+	private Frame frame;
 	
 	public Frame(Model model)
 	{
 		super("AUTOMAT Machine Project S18");
 		
 		this.model = model;
+		frame = this;
 		
 		setLayout(null);
 		setSize(750,750);
@@ -204,10 +207,19 @@ public class Frame extends JFrame {
 	
 	private void addListeners()
 	{
+		about.addActionListener(new AboutListener());
 		quit.addActionListener(new QuitListener());
 		transport.addActionListener(new TransportListener());
 	}
 	
+	class AboutListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(frame, "<html>This program is for compliance for AUTOMAT S18 Machine Project<br><br>Members:<br>Miguel Llamas<br>Brian Poblete<br>Louie Rivera</html>", "About", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+	}
 	class QuitListener implements ActionListener{
 
 		@Override
@@ -225,8 +237,10 @@ public class Frame extends JFrame {
 			if(checkEntitySelect())
 				System.out.println("True");
 			else
-				System.out.println("False");
-			
+				if(getEntitySelect().size() == 0)
+					JOptionPane.showMessageDialog(frame, "You must have at least 1 living thing travelling with you", "Empty Ship", JOptionPane.ERROR_MESSAGE);
+				else
+					JOptionPane.showMessageDialog(frame, "You must have at most 2 living things travelling with you", "Full Ship", JOptionPane.ERROR_MESSAGE);
 			clearEntitySelect();
 		}
 		
@@ -246,6 +260,10 @@ public class Frame extends JFrame {
 	private ArrayList<String> getEntitySelect()
 	{
 		ArrayList<String> selected = new ArrayList<String>();
+		
+		for(JCheckBox cB : entities)
+			if(cB.isSelected())
+				selected.add(cB.getText());
 		
 		return selected;
 	}
