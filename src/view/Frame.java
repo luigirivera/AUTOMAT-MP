@@ -12,6 +12,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import model.Model;
+
 public class Frame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
@@ -27,9 +29,13 @@ public class Frame extends JFrame {
 	private final int inMarsX = 535;
 	private ArrayList<JCheckBox> entities;
 	
-	public Frame()
+	private Model model;
+	
+	public Frame(Model model)
 	{
 		super("AUTOMAT Machine Project S18");
+		
+		this.model = model;
 		
 		setLayout(null);
 		setSize(750,750);
