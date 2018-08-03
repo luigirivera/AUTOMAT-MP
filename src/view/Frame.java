@@ -287,7 +287,7 @@ public class Frame extends JFrame {
 					selected.add(i);
 				else
 				{
-					JOptionPane.showMessageDialog(frame, "That living thing is not in the planet you are in.", "Missing Living Thing", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "A living thing you selected is not in the planet you are in.", "Missing Living Thing", JOptionPane.ERROR_MESSAGE);
 					return null;
 				}
 		
