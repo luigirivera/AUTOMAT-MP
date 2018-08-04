@@ -22,8 +22,10 @@ public class Frame extends JFrame {
 
 	private JButton about, instructions, walkthrough, quit, transport;
 	private JCheckBox human1, human2, cow, lion, grain;
-	private Planet earth, mars;
 	private JLabel location, human1txt, human2txt, cowtxt, liontxt, graintxt, earthtxt, marstxt, stepCount;
+	private JFrame automaton, instructionsFrame, walkthroughFrame;
+	
+	private Planet earth, mars;
 	
 	private final String earthLoc = "You are in Earth";
 	private final String marsLoc = "You are in Mars";
