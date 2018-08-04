@@ -93,6 +93,10 @@ public class Frame extends JFrame {
 		entities = new ArrayList<JCheckBox>();
 		modelEntities = new ArrayList<Entity>();
 		textEntities = new ArrayList<JLabel>();
+		
+		instructionsFrame = new Instructions();
+		walkthroughFrame = new Walkthrough();
+		automaton = new Automaton();
 	}
 	
 	private void initialize()
