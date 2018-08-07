@@ -23,7 +23,7 @@ public class Frame extends JFrame {
 	private JButton about, instructions, walkthrough, quit, transport;
 	private JCheckBox human1, human2, cow, lion, grain;
 	private JLabel location, human1txt, human2txt, cowtxt, liontxt, graintxt, earthtxt, marstxt, stepCount;
-	private JFrame automaton, instructionsFrame, walkthroughFrame;
+	private JFrame automaton, walkthroughFrame;
 	
 	private Planet earth, mars;
 	
@@ -94,7 +94,6 @@ public class Frame extends JFrame {
 		modelEntities = new ArrayList<Entity>();
 		textEntities = new ArrayList<JLabel>();
 		
-		instructionsFrame = new Instructions();
 		walkthroughFrame = new Walkthrough();
 		automaton = new Automaton();
 	}
@@ -243,6 +242,7 @@ public class Frame extends JFrame {
 	private void addListeners()
 	{
 		about.addActionListener(new AboutListener());
+		instructions.addActionListener(new InstructionsListener());
 		quit.addActionListener(new QuitListener());
 		transport.addActionListener(new TransportListener());
 	}
@@ -252,6 +252,16 @@ public class Frame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(frame, "<html>This program is for compliance for AUTOMAT S18 Machine Project<br><br>Members:<br>Miguel Llamas<br>Brian Poblete<br>Louie Rivera</html>", "About", JOptionPane.INFORMATION_MESSAGE);
+		}
+		
+	}
+	
+	class InstructionsListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			JOptionPane.showMessageDialog(frame, "<html>The Earth is slowly dying and a scientist wants to help build a new life on Mars.<br>However, he only has a spaceship that was so tiny it could only carry him and two other items.<br>He wants to transport five things that he thought were essential to start a new life on Mars: two humans, one lion, one cow and one bag of grain.<br>Whenever the scientist is not around, either human would kill the lion out of fear or eat the cow out of hunger, the lion will eat the cow, and the cow will eat the grain.<br>Only the scientist knows how to fly the spaceship. How will the scientist transport all the five items to Mars?</html>", "Instructions", JOptionPane.INFORMATION_MESSAGE);
+			
 		}
 		
 	}
