@@ -439,19 +439,20 @@ public class Frame extends JFrame {
 		else
 			location.setText(marsLoc);
 		
-		clearEntitySelect();
-		if(checkStatus())
+		if(checkStatus() && checkEntitySelect())
 		{
 			stepCountInt++;
 			stepCount.setText("Steps Done: " + stepCountInt);
 		}
 		
+		clearEntitySelect();
+		
 		if(getAllInMars().size() == 5)
 		{
 			if(stepCountInt == 7)
-				JOptionPane.showMessageDialog(frame, "You have succesfully tranferred all living things", "Mission Success", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "You have successfully transferred all living things", "Mission Success", JOptionPane.INFORMATION_MESSAGE);
 			else
-				JOptionPane.showMessageDialog(frame, "<html>You have succesfully tranferred all living things<br>However, it was performed not on the minimum number of steps</html>", "Mission Somewhat Success", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "<html>You have successfully transferred all living things<br>However, it was performed not on the minimum number of steps</html>", "Mission Somewhat Success", JOptionPane.INFORMATION_MESSAGE);
 			System.exit(0);
 		}
 	}
