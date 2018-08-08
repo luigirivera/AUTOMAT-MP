@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -17,4 +18,10 @@ public class ImagePanel extends JPanel {
 			image = ImageIO.read(new File("res/Automaton.jpg"));
 		}catch(Exception e) {}
 	}
+	
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, 0, 0, this);
+    }
 }
