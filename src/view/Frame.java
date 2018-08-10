@@ -95,7 +95,7 @@ public class Frame extends JFrame {
 		textEntities = new ArrayList<JLabel>();
 		
 		walkthroughFrame = new Walkthrough();
-		//automaton = new Automaton();
+		automaton = new Automaton();
 	}
 	
 	private void initialize()
