@@ -15,7 +15,7 @@ public class ImagePanel extends JPanel {
 	public ImagePanel()
 	{
 		try {
-			image = ImageIO.read(new File("res/Automaton.jpg"));
+			image = ImageIO.read(new File("res/Automaton.png"));
 		}catch(Exception e) {}
 	}
 	
