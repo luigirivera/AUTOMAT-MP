@@ -13,6 +13,7 @@ public class Walkthrough extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JButton through1, through2, through3, through4;
+	private Steps steps;
 	private Automaton automaton;
 	
 	public Walkthrough()
@@ -39,6 +40,7 @@ public class Walkthrough extends JFrame {
 		through4 = new JButton("Solution 4");
 		
 		automaton = new Automaton();
+		steps = new Steps();
 	}
 	
 	private void initialize()
@@ -94,15 +96,34 @@ public class Walkthrough extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			if(!automaton.isVisible())
 				automaton.setVisible(true);
+			if(!steps.isVisible())
+				steps.setVisible(true);
+			
 			String file = "res/Automaton_Blank.png";
 			if(arg0.getSource().equals(through1))
+			{
 				file = "res/Automaton_Sol1.png";
+				steps.getSteps().setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Cow to Earth<br>Step 3: Bring Cow and Grain to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring both humans to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
+			}
+				
 			else if(arg0.getSource().equals(through2))
+			{
 				file = "res/Automaton_Sol2.png";
+				steps.getSteps().setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring Lion and Grain to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring both humans to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
+			}
+				
 			else if(arg0.getSource().equals(through3))
+			{
 				file = "res/Automaton_Sol3.png";
+				steps.getSteps().setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring both humans to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring Lion and Grain to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
+			}
+				
 			else if(arg0.getSource().equals(through4))
+			{
+				steps.getSteps().setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring both humans to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring Cow and Grain to Mars<br>Step 6: Bring Cow to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 				file = "res/Automaton_Sol4.png";
+			}
+				
 			
 			automaton.getImagePanel().change(file);
 			
