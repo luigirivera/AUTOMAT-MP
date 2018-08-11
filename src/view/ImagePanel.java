@@ -15,7 +15,7 @@ public class ImagePanel extends JPanel {
 	public ImagePanel()
 	{
 		try {
-			image = ImageIO.read(new File("res/Automaton_q0.png"));
+			image = ImageIO.read(new File("res/Automaton_Blank.png"));
 		}catch(Exception e) {}
 	}
 	
@@ -30,7 +30,19 @@ public class ImagePanel extends JPanel {
     	try {
     		image = ImageIO.read(new File(file));
     	}catch(Exception e) {}
-    	
     	repaint();
     }
+    
+    public void change(BufferedImage image)
+    {
+    	this.image = image;
+    }
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
 }

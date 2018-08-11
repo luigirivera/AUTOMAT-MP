@@ -10,7 +10,7 @@ public class Automaton extends JFrame {
 	
 	public Automaton()
 	{
-		super("AUTOMAT Machine Project S18");
+		super("AUTOMAT Machine Project S18 - Automaton");
 		
 		setResizable(false);
 		setSize(1015,550);

@@ -24,6 +24,7 @@ public class Frame extends JFrame {
 	private JCheckBox human1, human2, cow, lion, grain;
 	private JLabel location, human1txt, human2txt, cowtxt, liontxt, graintxt, earthtxt, marstxt, stepCount;
 	private Automaton automaton;
+	private Walkthrough walkthroughFrame;
 	
 	private Planet earth, mars;
 	
@@ -94,14 +95,12 @@ public class Frame extends JFrame {
 		modelEntities = new ArrayList<Entity>();
 		textEntities = new ArrayList<JLabel>();
 		
-		//walkthroughFrame = new Walkthrough();
+		walkthroughFrame = new Walkthrough();
 		automaton = new Automaton();
 	}
 	
 	private void initialize()
 	{
-		this.getContentPane().setBackground(new Color(100,100,200));
-		
 		add(about);
 		add(instructions);
 		add(quit);
@@ -196,6 +195,8 @@ public class Frame extends JFrame {
 	
 	private void configure()
 	{
+		this.getContentPane().setBackground(new Color(100,100,200));
+		
 		earth.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		mars.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
@@ -235,6 +236,8 @@ public class Frame extends JFrame {
 			b.setBorder(BorderFactory.createEtchedBorder());
 			b.setForeground(Color.WHITE);
 		}
+		
+		automaton.getImagePanel().change("res/Automaton_q0.png");
 	}
 	
 
@@ -245,6 +248,7 @@ public class Frame extends JFrame {
 		instructions.addActionListener(new InstructionsListener());
 		quit.addActionListener(new QuitListener());
 		transport.addActionListener(new TransportListener());
+		walkthrough.addActionListener(new WalkthroughListener());
 	}
 	
 	class AboutListener implements ActionListener{
@@ -288,6 +292,16 @@ public class Frame extends JFrame {
 					JOptionPane.showMessageDialog(frame, "You must have at most 2 living things travelling with you", "Full Ship", JOptionPane.ERROR_MESSAGE);
 
 			update();
+		}
+		
+	}
+	
+	class WalkthroughListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			walkthroughFrame.setVisible(true);
+			
 		}
 		
 	}
@@ -507,7 +521,6 @@ public class Frame extends JFrame {
 						&& earthA.contains(model.getLion()))
 					file = "res/Automaton_q20.png";
 			}
-			
 			automaton.getImagePanel().change(file);
 		}
 	}
