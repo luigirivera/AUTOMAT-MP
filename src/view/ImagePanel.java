@@ -24,4 +24,13 @@ public class ImagePanel extends JPanel {
         super.paintComponent(g);
         g.drawImage(image, 0, 0, this);
     }
+    
+    public void change(String file)
+    {
+    	try {
+    		image = ImageIO.read(new File(file));
+    	}catch(Exception e) {}
+    	
+    	repaint();
+    }
 }

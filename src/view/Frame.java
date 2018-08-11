@@ -23,7 +23,7 @@ public class Frame extends JFrame {
 	private JButton about, instructions, walkthrough, quit, transport;
 	private JCheckBox human1, human2, cow, lion, grain;
 	private JLabel location, human1txt, human2txt, cowtxt, liontxt, graintxt, earthtxt, marstxt, stepCount;
-	private JFrame automaton, walkthroughFrame;
+	private Automaton automaton;
 	
 	private Planet earth, mars;
 	
@@ -94,8 +94,8 @@ public class Frame extends JFrame {
 		modelEntities = new ArrayList<Entity>();
 		textEntities = new ArrayList<JLabel>();
 		
-		walkthroughFrame = new Walkthrough();
-		//automaton = new Automaton();
+		//walkthroughFrame = new Walkthrough();
+		automaton = new Automaton();
 	}
 	
 	private void initialize()
@@ -346,6 +346,9 @@ public class Frame extends JFrame {
 				
 				model.getUser().setPlanet(PLANET.EARTH);
 			}
+			
+			stepCountInt++;
+			stepCount.setText("Steps Done: " + stepCountInt);
 		}
 	}
 	
@@ -426,6 +429,88 @@ public class Frame extends JFrame {
 		return pass;
 	}
 	
+	private boolean containsAHuman(ArrayList<Entity> planet)
+	{
+		return planet.contains(model.getHuman1()) || planet.contains(model.getHuman2());
+	}
+	
+	private boolean containsBothHuman(ArrayList<Entity> planet)
+	{
+		return planet.contains(model.getHuman1()) && planet.contains(model.getHuman2());
+	}
+	
+	private void updateAutomaton()
+	{
+		if(checkStatus())
+		{
+			ArrayList<Entity> marsA, earthA;
+			String file = "res/Automaton_Blank.png";
+
+			marsA = getAllInMars();
+			earthA = getAllInEarth();
+			
+			if(model.getUser().getPlanet().equals(PLANET.MARS))
+			{
+				if(earthA.isEmpty())
+					file = "res/Automaton_q10.png";
+				else if(containsBothHuman(earthA) && earthA.contains(model.getGrain()) && marsA.contains(model.getCow())
+						&& marsA.contains(model.getLion()))
+					file = "res/Automaton_q4.png";
+				else if(containsBothHuman(earthA) && marsA.contains(model.getLion()) && marsA.contains(model.getCow())
+						&& marsA.contains(model.getGrain()))
+					file = "res/Automaton_q21.png";
+				else if(containsAHuman(earthA) && containsAHuman(marsA) && marsA.contains(model.getLion()) && earthA.contains(model.getGrain())
+						&& marsA.contains(model.getCow()))
+					file = "res/Automaton_q22.png";
+				else if(containsBothHuman(marsA) && marsA.contains(model.getCow()) && earthA.contains(model.getLion())
+						&& earthA.contains(model.getGrain()))
+					file = "res/Automaton_q11.png";
+				else if(containsBothHuman(marsA) && marsA.contains(model.getCow()) && marsA.contains(model.getGrain())
+						&& earthA.contains(model.getLion()))
+					file = "res/Automaton_q19.png";
+				else if(containsBothHuman(marsA) && marsA.contains(model.getLion()) && marsA.contains(model.getGrain())
+						&& earthA.contains(model.getCow()))
+					file = "res/Automaton_q8.png";
+				else if(containsBothHuman(marsA) && marsA.contains(model.getLion()) && marsA.contains(model.getCow())
+						&& earthA.contains(model.getGrain()))
+					file = "res/Automaton_q18.png";
+				else if(containsAHuman(earthA) && containsAHuman(marsA) && marsA.contains(model.getLion()) && marsA.contains(model.getCow())
+						&& marsA.contains(model.getGrain()))
+					file = "res/Automaton_q12.png";
+			}
+			else
+			{
+				if(marsA.isEmpty())
+					file = "res/Automaton_q0.png";
+				else if(marsA.contains(model.getCow()) && containsBothHuman(earthA) && earthA.contains(model.getLion())
+						&& earthA.contains(model.getGrain()))
+					file = "res/Automaton_q1.png";
+				else if(marsA.contains(model.getLion()) && containsBothHuman(earthA) && earthA.contains(model.getCow())
+						&& earthA.contains(model.getGrain()))
+					file = "res/Automaton_q2.png";
+				else if(marsA.contains(model.getGrain()) && containsBothHuman(earthA) && earthA.contains(model.getCow())
+						&& earthA.contains(model.getLion()))
+					file = "res/Automaton_q26.png";
+				else if(containsAHuman(earthA) && containsAHuman(marsA) && earthA.contains(model.getLion()) && earthA.contains(model.getCow())
+						&& earthA.contains(model.getGrain()))
+					file = "res/Automaton_q17.png";
+				else if (containsBothHuman(marsA) && earthA.contains(model.getLion()) && earthA.contains(model.getCow())
+						&& earthA.contains(model.getGrain()))
+					file = "res/Automaton_q16.png";
+				else if(containsBothHuman(marsA) && marsA.contains(model.getGrain()) && earthA.contains(model.getCow()) &&
+						earthA.contains(model.getLion()))
+					file = "res/Automaton_q9.png";
+				else if(containsBothHuman(earthA) && earthA.contains(model.getCow()) && marsA.contains(model.getLion())
+						&& marsA.contains(model.getGrain()))
+					file = "res/Automaton_q7.png";
+				else if(containsAHuman(earthA) && containsAHuman(marsA) && marsA.contains(model.getGrain()) && earthA.contains(model.getCow())
+						&& earthA.contains(model.getLion()))
+					file = "res/Automaton_q20.png";
+			}
+			
+			automaton.getImagePanel().change(file);
+		}
+	}
 	private void update()
 	{
 		for(int i = 0 ; i < modelEntities.size() ; i++)
@@ -438,15 +523,10 @@ public class Frame extends JFrame {
 			location.setText(earthLoc);
 		else
 			location.setText(marsLoc);
-		
-		if(checkStatus() && checkEntitySelect())
-		{
-			stepCountInt++;
-			stepCount.setText("Steps Done: " + stepCountInt);
-		}
-		
+
 		clearEntitySelect();
 		
+		updateAutomaton();
 		if(getAllInMars().size() == 5)
 		{
 			if(stepCountInt == 7)

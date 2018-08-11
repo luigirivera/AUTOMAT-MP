@@ -13,7 +13,7 @@ public class Automaton extends JFrame {
 		super("AUTOMAT Machine Project S18");
 		
 		setResizable(false);
-		setSize(1010,550);
+		setSize(1015,550);
 		setLayout(null);
 		
 		
@@ -38,4 +38,21 @@ public class Automaton extends JFrame {
 		imagePanel.setBounds(0, 0, 1010, 500);
 		highlightPanel.setBounds(0, 0, 1010, 500);
 	}
+
+	public ImagePanel getImagePanel() {
+		return imagePanel;
+	}
+
+	public void setImagePanel(ImagePanel imagePanel) {
+		this.imagePanel = imagePanel;
+	}
+
+	public HighlightPanel getHighlightPanel() {
+		return highlightPanel;
+	}
+
+	public void setHighlightPanel(HighlightPanel highlightPanel) {
+		this.highlightPanel = highlightPanel;
+	}
+	
 }
