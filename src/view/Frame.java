@@ -37,14 +37,14 @@ public class Frame extends JFrame {
 	private ImageIcon rocketEarth, rocketMars;
 
 	private final Point human1Earth = new Point(20,40);
-	private final Point human2Earth = new Point(70,5);
+	private final Point human2Earth = new Point(65,5);
 	private final Point lionEarth = new Point(130,45);
 	private final Point cowEarth = new Point(190,50);
 	private final Point grainEarth = new Point(220,75);
 	private final Point scientistEarth = new Point(150,80);
 	
 	private final Point human1Mars = new Point(375,40);
-	private final Point human2Mars = new Point(425,5);
+	private final Point human2Mars = new Point(420,5);
 	private final Point lionMars = new Point(480,45);
 	private final Point cowMars = new Point(540,50);
 	private final Point grainMars = new Point(570,75);
@@ -169,7 +169,6 @@ public class Frame extends JFrame {
 		imagePanel.setBounds(750, 75, 1015, 500);
 		sky.setBounds(0,0,1765,750);
 		skyL.setBounds(0,0,1765,750);
-		
 		
 		
 		planets.setBounds(50,200, 660, 300);
