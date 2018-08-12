@@ -6,20 +6,24 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class Walkthrough extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private JButton through1, through2, through3, through4;
-	private Steps steps;
-	private Automaton automaton;
+	private JPanel steps, sky;
+	private JLabel stepsL, skyL;
+	private ImagePanel imagePanel;
 	
 	public Walkthrough()
 	{
 		super("AUTOMAT Machine Project S18 - Walkthrough");
-		setSize(250,280);
+		setSize(1265,528);
 		setLayout(null);
 		
 		instantiate();
@@ -39,31 +43,50 @@ public class Walkthrough extends JFrame {
 		through3 = new JButton("Solution 3");
 		through4 = new JButton("Solution 4");
 		
-		automaton = new Automaton();
-		steps = new Steps();
+		steps = new JPanel();
+		stepsL = new JLabel();
+		
+		sky = new JPanel();
+		skyL = new JLabel(new ImageIcon("res/sky_through.png"));
+		imagePanel = new ImagePanel();
 	}
 	
 	private void initialize()
 	{
-		
 		
 		add(through1);
 		add(through2);
 		add(through3);
 		add(through4);
 		
+		add(steps);
+		steps.setLayout(null);
+		steps.setOpaque(false);
+		steps.add(stepsL);
+		
+		add(imagePanel);
+		
+		add(sky);
+		sky.add(skyL);
+		sky.setBounds(0, 0, 1265, 528);
+		skyL.setBounds(0,0,1265, 528);
+		
+		
+		imagePanel.setBounds(250, 0, 1015, 500);
+		
+		steps.setBounds(0, 250, 250, 200);
+		stepsL.setBounds(20, 20, 250, 200);
+		
 		through1.setBounds(70, 10, 100, 50);
 		through2.setBounds(70, 70, 100, 50);
 		through3.setBounds(70, 130, 100, 50);
 		through4.setBounds(70, 190, 100, 50);
-		
-		automaton.setVisible(false);
-		automaton.setDefaultCloseOperation(HIDE_ON_CLOSE);
 	}
 	
 	private void configure()
 	{
-		this.getContentPane().setBackground(new Color(100,100,200));
+		
+		stepsL.setForeground(Color.WHITE);
 		
 		ArrayList<JButton> buttons = new ArrayList<JButton>();
 		
@@ -94,38 +117,34 @@ public class Walkthrough extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if(!automaton.isVisible())
-				automaton.setVisible(true);
-			if(!steps.isVisible())
-				steps.setVisible(true);
 			
 			String file = "res/Automaton_Blank.png";
 			if(arg0.getSource().equals(through1))
 			{
 				file = "res/Automaton_Sol1.png";
-				steps.getSteps().setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Cow to Earth<br>Step 3: Bring Cow and Grain to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring both humans to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
+				stepsL.setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Cow to Earth<br>Step 3: Bring Cow and Grain to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring both humans to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 			}
 				
 			else if(arg0.getSource().equals(through2))
 			{
 				file = "res/Automaton_Sol2.png";
-				steps.getSteps().setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring Lion and Grain to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring both humans to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
+				stepsL.setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring Lion and Grain to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring both humans to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 			}
 				
 			else if(arg0.getSource().equals(through3))
 			{
 				file = "res/Automaton_Sol3.png";
-				steps.getSteps().setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring both humans to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring Lion and Grain to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
+				stepsL.setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring both humans to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring Lion and Grain to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 			}
 				
 			else if(arg0.getSource().equals(through4))
 			{
-				steps.getSteps().setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring both humans to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring Cow and Grain to Mars<br>Step 6: Bring Cow to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
+				stepsL.setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring both humans to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring Cow and Grain to Mars<br>Step 6: Bring Cow to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 				file = "res/Automaton_Sol4.png";
 			}
 				
 			
-			automaton.getImagePanel().change(file);
+			imagePanel.change(file);
 			
 		}
 		
