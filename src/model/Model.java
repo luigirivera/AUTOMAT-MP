@@ -15,6 +15,7 @@ public class Model {
 		lion = new Lion();
 		cow = new Cow();
 		grain = new Grain();
+		new Algorithm();
 	}
 
 	public User getUser() {
