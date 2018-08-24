@@ -119,4 +119,7 @@ public class Automaton {
         q16.addTransition(new Transition("SLC", q17));
 
     }
+    public ArrayList<State> getStates(){
+    	return stateList;
+    }
 }
