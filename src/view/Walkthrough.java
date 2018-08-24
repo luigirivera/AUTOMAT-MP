@@ -11,10 +11,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+
+import automat_new.Automaton;
+import automat_new.DFS;
+import automat_new.Transition;
 
 public class Walkthrough extends JFrame {
 	private static final long serialVersionUID = 1L;
-	
+	private JTextArea textArea;
+	private DFS algo;
+	private int shortest;
+	ArrayList<ArrayList<Transition>> solutions;
 	private JButton through1, through2, through3, through4;
 	private JPanel steps, sky;
 	private JLabel stepsL, skyL;
@@ -23,7 +31,7 @@ public class Walkthrough extends JFrame {
 	public Walkthrough()
 	{
 		super("AUTOMAT Machine Project S18 - Walkthrough");
-		setSize(1265,528);
+		setSize(1265,778);
 		setLayout(null);
 		
 		instantiate();
@@ -49,6 +57,10 @@ public class Walkthrough extends JFrame {
 		sky = new JPanel();
 		skyL = new JLabel(new ImageIcon("res/sky_through.png"));
 		imagePanel = new ImagePanel();
+		
+		textArea = new JTextArea();
+		algo = new DFS(new Automaton());
+		solutions = new ArrayList<>();
 	}
 	
 	private void initialize()
@@ -59,6 +71,9 @@ public class Walkthrough extends JFrame {
 		add(through3);
 		add(through4);
 		
+		add(textArea);
+		textArea.setBounds(0, 528, 600, 250);
+		
 		add(steps);
 		steps.setLayout(null);
 		steps.setOpaque(false);
@@ -68,9 +83,9 @@ public class Walkthrough extends JFrame {
 		
 		add(sky);
 		sky.add(skyL);
-		sky.setBounds(0, 0, 1265, 528);
-		skyL.setBounds(0,0,1265, 528);
-		
+		sky.setBounds(0, 0, 1265, 778);
+		skyL.setBounds(0,0,1265, 778);
+
 		
 		imagePanel.setBounds(250, 0, 1015, 500);
 		
@@ -103,6 +118,39 @@ public class Walkthrough extends JFrame {
 			b.setBorder(BorderFactory.createEtchedBorder());
 			b.setForeground(Color.WHITE);
 		}
+		
+		textArea.setEditable(false);
+		
+		shortest = algo.getShortest();
+		System.out.println(shortest);
+        ArrayList<Transition> temp = new ArrayList<>();
+        for(ArrayList<Transition> t : algo.getSolutionTransitions())
+        {
+        	if(t.size() == shortest)
+        	{
+            	solutions.add(temp);
+            	temp = new ArrayList<>();
+        	}
+        }
+        
+
+        
+        textArea.setText("Performing Algorithm...\n");
+        textArea.setText(textArea.getText().concat("Found " + solutions.size() + " solutions\n"));
+        int j=1;
+        for(int i = 0; i < algo.getSolutionTransitions().size(); i++) {
+        	temp.addAll(algo.getSolutionTransitions().get(i)); 
+        	if(temp.size() == shortest)
+        	{
+        		textArea.setText(textArea.getText().concat("Solution " + j + ": "));
+                for(Transition t : temp)
+                	textArea.setText(textArea.getText().concat(" -> " + t.getName()));
+                textArea.setText(textArea.getText().concat("\n"));
+                j++;
+        	}
+
+            temp.clear();
+        }
 	}
 	
 	private void addListeners()
