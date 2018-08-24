@@ -121,6 +121,7 @@ public class Frame extends JFrame {
 		
 		walkthroughFrame = new Walkthrough();
 		imagePanel = new ImagePanel();
+		new Algorithm();
 	}
 	
 	private void initialize()
