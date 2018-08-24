@@ -122,7 +122,7 @@ public class Walkthrough extends JFrame {
 		textArea.setEditable(false);
 		
 		shortest = algo.getShortest();
-		System.out.println(shortest);
+		
         ArrayList<Transition> temp = new ArrayList<>();
         for(ArrayList<Transition> t : algo.getSolutionTransitions())
         {

@@ -312,7 +312,7 @@ public class Frame extends JFrame {
 			if(checkEntitySelect())
 				moveEntities(getEntitySelect());
 			else
-				if(getEntitySelect().size() == 0)
+				if(getEntitySelect() != null && getEntitySelect().size() == 0)
 					JOptionPane.showMessageDialog(frame, "You must have at least 1 living thing travelling with you", "Empty Ship", JOptionPane.ERROR_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(frame, "You must have at most 2 living things travelling with you", "Full Ship", JOptionPane.ERROR_MESSAGE);
