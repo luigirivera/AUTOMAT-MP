@@ -10,6 +10,7 @@ public class DFS {
 	private ArrayList<ArrayList<Transition>> solutionTransitions = new ArrayList<>();
 	private State finalState;
 	private State startState;
+	int shortest;
 	
 	public DFS (Automaton automaton) {
 		this.automaton = automaton;
@@ -22,6 +23,20 @@ public class DFS {
 		
 		search(startState, checkedStates, transitions);
 		
+		shortest = solutions.get(0).size();
+		for(ArrayList<Transition> s : solutionTransitions)
+			if(shortest > s.size())
+				shortest = s.size();
+		
+//		ArrayList<ArrayList<Transition>> shortestT = new ArrayList<>();
+//		for(ArrayList<State> c : solutions)
+//			if(shortest == c.size())
+//				shortestT.add()
+	}
+
+
+	public int getShortest() {
+		return shortest;
 	}
 
 
