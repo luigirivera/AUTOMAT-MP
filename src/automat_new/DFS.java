@@ -8,12 +8,13 @@ public class DFS {
 	
 	private ArrayList<ArrayList<State>> solutions = new ArrayList<>();
 	private ArrayList<ArrayList<Transition>> solutionTransitions = new ArrayList<>();
-	State finalState = automaton.getStates().get(17);
-	
+	private State finalState;
+	private State startState;
 	
 	public DFS (Automaton automaton) {
 		this.automaton = automaton;
-		State startState = automaton.getStates().get(0);
+		startState = automaton.getStates().get(0);
+		finalState = automaton.getStates().get(17);
 		
 		ArrayList<State> checkedStates = new ArrayList<>();
 		checkedStates.add(startState);
@@ -46,5 +47,13 @@ public class DFS {
 			solutionTransitions.add(tempTransList);
 		}
 		
+	}
+	
+	public ArrayList<ArrayList<State>> getSolutions(){
+		return solutions;
+	}
+	
+	public ArrayList<ArrayList<Transition>> getSolutionTransitions(){
+		return solutionTransitions;
 	}
 }
