@@ -19,7 +19,7 @@ public class DFS {
 		
 		ArrayList<State> checkedStates = new ArrayList<>();
 		checkedStates.add(startState);
-		ArrayList<Transition> transitions = new ArrayList();
+		ArrayList<Transition> transitions = new ArrayList<>();
 		
 		search(startState, checkedStates, transitions);
 		
@@ -27,11 +27,6 @@ public class DFS {
 		for(ArrayList<Transition> s : solutionTransitions)
 			if(shortest > s.size())
 				shortest = s.size();
-		
-//		ArrayList<ArrayList<Transition>> shortestT = new ArrayList<>();
-//		for(ArrayList<State> c : solutions)
-//			if(shortest == c.size())
-//				shortestT.add()
 	}
 
 
@@ -54,8 +49,8 @@ public class DFS {
 				}
 			}
 		}else {
-			ArrayList<State> tempStateList = new ArrayList();
-			ArrayList<Transition> tempTransList = new ArrayList();
+			ArrayList<State> tempStateList = new ArrayList<>();
+			ArrayList<Transition> tempTransList = new ArrayList<>();
 			tempStateList.addAll(checkedStates);
 			tempTransList.addAll(transitions);
 			solutions.add(tempStateList);

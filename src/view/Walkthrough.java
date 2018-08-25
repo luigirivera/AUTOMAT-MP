@@ -136,7 +136,7 @@ public class Walkthrough extends JFrame {
 
         
         textArea.setText("Performing Algorithm...\n");
-        textArea.setText(textArea.getText().concat("Found " + solutions.size() + " solutions\n"));
+        textArea.setText(textArea.getText().concat("Found " + solutions.size() + " solutions with " + shortest + " steps\n"));
         int j=1;
         for(int i = 0; i < algo.getSolutionTransitions().size(); i++) {
         	temp.addAll(algo.getSolutionTransitions().get(i)); 
@@ -167,25 +167,25 @@ public class Walkthrough extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			String file = "res/Automaton_Blank.png";
-			if(arg0.getSource().equals(through1))
+			if(arg0.getSource().equals(through4))
 			{
 				file = "res/Automaton_Sol1.png";
 				stepsL.setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Cow to Earth<br>Step 3: Bring Cow and Grain to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring both humans to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 			}
 				
-			else if(arg0.getSource().equals(through2))
+			else if(arg0.getSource().equals(through3))
 			{
 				file = "res/Automaton_Sol2.png";
 				stepsL.setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring Lion and Grain to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring both humans to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 			}
 				
-			else if(arg0.getSource().equals(through3))
+			else if(arg0.getSource().equals(through1))
 			{
 				file = "res/Automaton_Sol3.png";
 				stepsL.setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring both humans to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring Lion and Grain to Mars<br>Step 6: Bring Lion to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 			}
 				
-			else if(arg0.getSource().equals(through4))
+			else if(arg0.getSource().equals(through2))
 			{
 				stepsL.setText("<html>Step 1: Bring Lion and Cow to Mars<br>Step 2: Bring Lion to Earth<br>Step 3: Bring both humans to Mars<br>Step 4: Bring Cow to Earth<br>Step 5: Bring Cow and Grain to Mars<br>Step 6: Bring Cow to Earth<br>Step 7: Bring Lion and Cow to Mars</html>");
 				file = "res/Automaton_Sol4.png";

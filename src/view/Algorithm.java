@@ -1,13 +1,6 @@
 package view;
 
-import java.util.ArrayList;
-
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
-
-import automat_new.Automaton;
-import automat_new.DFS;
-import automat_new.Transition;
 
 public class Algorithm extends JFrame {
 	private static final long serialVersionUID = 1L;
